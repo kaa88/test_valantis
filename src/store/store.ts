@@ -1,11 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
-import searchSlice from './slices/searchSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import goodsSlice from "./slices/goodsSlice";
 
 export const store = configureStore({
-   reducer: {
-      search: searchSlice
-   },
-   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
+  reducer: {
+    search: goodsSlice,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
