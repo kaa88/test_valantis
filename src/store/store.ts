@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import goodsSlice from "./slices/goodsSlice";
+import productSlice from "./slices/productSlice";
 
 export const store = configureStore({
   reducer: {
-    search: goodsSlice,
+    product: productSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }),

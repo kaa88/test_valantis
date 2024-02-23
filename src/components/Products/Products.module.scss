@@ -1,0 +1,15 @@
+.default {
+  margin-top: 10px;
+  height: calc(100% - 20px);
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+}
+.list {
+  margin-top: 15px;
+}

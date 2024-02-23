@@ -12,7 +12,7 @@
   padding: 6px 10px;
   background-color: #cfdafe;
   &:not(:first-child) {
-    margin-top: 2px;
+    margin-top: 4px;
   }
   .highlighted {
     color: red;
@@ -25,25 +25,6 @@
   margin-bottom: 0;
   opacity: 0.5;
 }
-.itemTitle {
-  margin-left: 10px;
-  margin-bottom: 0;
-}
-.itemText {
-  margin-top: 8px;
-  font-size: 14px;
-  text-align: justify;
-}
 .status {
   text-align: center;
-}
-.paginationButton {
-  margin-right: 3px;
-  width: 30px;
-  height: 30px;
-  background-color: #fff;
-  border: solid 1px #ccc;
-  &.active {
-    background-color: yellowgreen;
-  }
 }

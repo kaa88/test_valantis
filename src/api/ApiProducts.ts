@@ -1,5 +1,6 @@
 import Axios from "axios";
-import { QueryBody } from "./types";
+import * as types from "./types";
+import md5 from "md5";
 
 const API_PATH = "http://api.valantis.store:40000";
 const API_PWD = "Valantis";
@@ -12,27 +13,24 @@ const settings = {
 const api = Axios.create(settings);
 
 api.interceptors.request.use((config) => {
-  config.headers["x-auth"] = `md5("${API_PWD}_${getTimestamp()}")`;
+  config.headers["X-Auth"] = md5(`${API_PWD}_${getTimestamp()}`);
   return config;
 });
 
-export interface GetParams {
-  searchFragment?: string;
-  limit?: number;
-  page?: number;
-}
-
-const ApiGoods = {
-  async getList(data: QueryBody) {
-    const fakeData: QueryBody = {
+const ApiProducts = {
+  async getIds(data: types.QueryBodyGetIds) {
+    return await api.post<types.QueryResponseGetIds>("/", data);
+  },
+  async getItems(ids: types.QueryBodyGetItems) {
+    const data = {
       action: "get_items",
-      params: {},
+      params: { ids },
     };
-    return await api.post("/", fakeData);
+    return await api.post<types.QueryResponseGetItems>("/", data);
   },
 };
 
-export default ApiGoods;
+export default ApiProducts;
 
 const getTimestamp = (): string => {
   const now = new Date();

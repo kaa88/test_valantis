@@ -1,7 +1,7 @@
-import Search from "./components/Goods/Goods";
+import Products from "./components/Products/Products";
 
 function App() {
-  return <Search />;
+  return <Products />;
 }
 
 export default App;

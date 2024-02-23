@@ -5,15 +5,53 @@ export interface IProduct {
   product: string | null;
 }
 
-export type IAction = "get_items" | "get_ids" | "offset" | "limit" | "filter";
+export type Id = string;
 
-export type Query = {};
+export type IAction = "get_items" | "get_fields" | "get_ids" | "filter";
 
-export type QueryBody = {
-  action: IAction;
-  params: any; //?
+export type IFilter = "brand" | "price" | "product";
+
+export interface IProductState {
+  isLoading: boolean;
+  loadError: string | null;
+  ids: Id[] | null;
+  products: IProduct[] | null;
+  filterType: IFilter | null;
+  filterValue: string | number | undefined;
+  limit: number;
+  pageCount: number;
+  activePage: number;
+  totalItemsCount: number;
+}
+
+export type QueryParamsKeys =
+  | "offset"
+  | "limit"
+  | "ids"
+  | "field"
+  | "price"
+  | "brand"
+  | "product";
+
+export type QueryParams = { [key in QueryParamsKeys]?: any };
+
+export type QueryGetIds = {
+  activePage?: number;
+};
+export type QueryBodyGetIds = {
+  action: "get_ids" | "filter";
+  params?: QueryParams;
+};
+export type QueryResponseGetIds = {
+  result: Id[];
 };
 
-export type QueryResponse = {
-  result: any; //?
+export type QueryBodyGetItems = Id[];
+export type QueryResponseGetItems = {
+  result: IProduct[];
+};
+
+export type QueryFilter = {
+  filterType: IProductState["filterType"];
+  filterValue?: IProductState["filterValue"];
 };
