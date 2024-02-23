@@ -16,7 +16,7 @@ const List = function ({ className = "", ...props }: ComponentProps<"div">) {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (loadError) {
+    if (loadError && loadError !== "Unknown error") {
       console.error("Error: " + loadError);
       dispatch(fetchUpdateList());
     }
