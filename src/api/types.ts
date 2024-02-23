@@ -13,6 +13,7 @@ export type IFilter = "brand" | "price" | "product";
 
 export interface IProductState {
   isLoading: boolean;
+  loadStatus: number;
   loadError: string | null;
   ids: Id[] | null;
   products: IProduct[] | null;

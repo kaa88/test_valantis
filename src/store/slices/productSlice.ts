@@ -8,6 +8,7 @@ const STATE_UPDATE_DELAY = 500;
 
 const initialState: types.IProductState = {
   isLoading: true,
+  loadStatus: 0,
   loadError: null,
   ids: null,
   products: null,
@@ -104,6 +105,7 @@ export const productSlice = createSlice({
     builder
       .addCase(fetchUpdateList.pending, (state) => {
         state.isLoading = true;
+        state.loadStatus = initialState.loadStatus;
         state.loadError = initialState.loadError;
         state.products = initialState.products;
         state.pageCount = initialState.pageCount;
@@ -117,9 +119,14 @@ export const productSlice = createSlice({
           action.payload instanceof AxiosError &&
           action.payload.isAxiosError &&
           action.payload.response?.data
-        )
+        ) {
           error = action.payload.response?.data;
+        } else if (action.payload instanceof Error) {
+          error = action.payload.message;
+        }
         state.loadError = error;
+        state.loadStatus =
+          action.payload?.response?.status || initialState.loadStatus;
       })
       .addCase(fetchUpdateList.fulfilled, (state, action) => {
         const ids = action.payload.result;
@@ -132,6 +139,7 @@ export const productSlice = createSlice({
 
       .addCase(fetchGetItems.pending, (state) => {
         state.isLoading = true;
+        state.loadStatus = initialState.loadStatus;
         state.loadError = initialState.loadError;
       })
       .addCase(fetchGetItems.rejected, (state, action) => {
@@ -141,9 +149,14 @@ export const productSlice = createSlice({
           action.payload instanceof AxiosError &&
           action.payload.isAxiosError &&
           action.payload.response?.data
-        )
+        ) {
           error = action.payload.response?.data;
+        } else if (action.payload instanceof Error) {
+          error = action.payload.message;
+        }
         state.loadError = error;
+        state.loadStatus =
+          action.payload?.response?.status || initialState.loadStatus;
       })
       .addCase(fetchGetItems.fulfilled, (state, action) => {
         state.isLoading = false;

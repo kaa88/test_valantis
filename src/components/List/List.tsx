@@ -5,9 +5,11 @@ import { fetchUpdateList } from "../../store/slices/productSlice";
 import { IProduct } from "../../api/types";
 import Pagination from "../Pagination/Pagination";
 
+const errorsToReload = [500];
+
 const List = function ({ className = "", ...props }: ComponentProps<"div">) {
   const dispatch = useAppDispatch();
-  const { isLoading, loadError, products } = useAppSelector(
+  const { isLoading, loadStatus, loadError, products } = useAppSelector(
     (state) => state.product
   );
 
@@ -16,7 +18,7 @@ const List = function ({ className = "", ...props }: ComponentProps<"div">) {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (loadError && loadError !== "Unknown error") {
+    if (loadError && errorsToReload.includes(loadStatus)) {
       console.error("Error: " + loadError);
       dispatch(fetchUpdateList());
     }
@@ -44,7 +46,7 @@ const List = function ({ className = "", ...props }: ComponentProps<"div">) {
   const loadErrorContent = <p className={classes.status}>{loadError}</p>;
   let content = normalContent;
   if (isLoading || !uniqueProducts) content = loadingContent;
-  else if (loadError !== null) content = loadErrorContent;
+  if (!isLoading && loadError !== null) content = loadErrorContent;
 
   return (
     <div className={`${className} ${classes.default}`} {...props}>
